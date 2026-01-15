@@ -1,0 +1,1 @@
+# smart_plants_home_solution
