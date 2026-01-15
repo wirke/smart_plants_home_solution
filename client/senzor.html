@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Meterolog</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; background: #222; color: white; }
+        .card { background: #333; padding: 20px; border-radius: 10px; display: inline-block; margin: 10px; min-width: 150px; }
+        .value { font-size: 2em; font-weight: bold; color: #00ffcc; }
+    </style>
+</head>
+<body>
+    <h1>Podaci</h1>
+    <div class="card">
+        <div>Temperatura</div>
+        <div id="temp" class="value">--</div>
+    </div>
+    <div class="card">
+        <div>Vlažnost</div>
+        <div id="vlaga" class="value">--</div>
+    </div>
+    <div class="card">
+        <div>Doba dana</div>
+        <div id="status" class="value">--</div>
+    </div>
+
+    <script>
+        const espIP = "http://192.168.0.101/data";
+
+        async function updateData() {
+            try {
+                const response = await fetch(espIP);
+                const data = await response.json();
+                
+                document.getElementById('temp').innerText = data.temp + " °C";
+                document.getElementById('vlaga').innerText = data.vlaga + " %";
+                const statusElement = document.getElementById('status');
+
+				if (data.status === "NOC") {
+					statusElement.innerText = "Noć";
+				} else {
+					statusElement.innerText = "Dan";
+				}
+            } catch (err) {
+                console.log("Greška pri osvežavanju:", err);
+            }
+        }
+
+        setInterval(updateData, 2000);
+    </script>
+</body>
+</html>
