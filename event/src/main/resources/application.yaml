@@ -1,5 +1,12 @@
 spring:
   application:
     name: server
+  influx:
+    url: http://influxdb:8086
+    token: mytoken123
+    org: plants
+    bucket: sensors
+mqtt:
+  broker: tcp://mqtt:1883
 server:
   port: 8081
